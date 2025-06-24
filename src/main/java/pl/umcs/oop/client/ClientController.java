@@ -36,7 +36,6 @@ public class ClientController {
     private PrintWriter writer;
     private Socket socket;
 
-    // Oryginalna lista do dodawania elementów
     private ObservableList<String> originalList;
     private SortedList<String> sortedList;
     private FilteredList<String> filteredList;
@@ -47,14 +46,11 @@ public class ClientController {
             socket = new Socket("localhost", 5000);
             writer = new PrintWriter(socket.getOutputStream(), true);
 
-            // Zachowaj oryginalną listę z wordList
             originalList = wordList.getItems();
 
-            // Ustaw sortowanie i filtrowanie na oryginalnej liście
             sortedList = new SortedList<>(originalList);
             filteredList = new FilteredList<>(sortedList);
 
-            // Obsługa filtrowania na podstawie tekstu
             filterField.setOnAction(event -> {
                 String text = filterField.getText();
                 if (text != null && !text.trim().isEmpty()) {
@@ -81,17 +77,13 @@ public class ClientController {
                             String timeString = hoursString + ":" + minutesString + ":" + secondsString;
                             String messageWithTimeStamp = message + " " + timeString;
 
-                            // ZAWSZE dodawaj do oryginalnej listy
                             originalList.add(messageWithTimeStamp);
 
-                            // Logika wyświetlania
                             String filterText = filterField.getText();
 
                             if (filterText == null || filterText.trim().isEmpty()) {
-                                // Gdy brak filtra - pokaż posortowaną listę
                                 wordList.setItems(sortedList);
                             } else {
-                                // Gdy jest filtr - zastosuj filtrowanie na posortowanej liście
                                 filteredList.setPredicate(item ->
                                         item.toLowerCase().contains(filterText.toLowerCase()));
                                 wordList.setItems(filteredList);
