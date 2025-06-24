@@ -16,7 +16,7 @@ public class ClientApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
+//s
 
     public static void main(String[] args) {
         launch();
